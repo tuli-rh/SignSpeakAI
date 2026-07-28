@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    text-align: center;
+}
+
+header {
+    background: #222;
+    color: white;
+    padding: 20px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 30px;
+}
+
+.camera,
+.gesture-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    width: 400px;
+}
+
+video {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.gesture-card img {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+}
+
+h2 {
+    color: #333;
+}
