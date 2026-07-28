@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignSpeak AI — Prototipo funcional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="static/css/styles.css">
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      <div class="logo-mark"></div>SignSpeak AI
+    </div>
+    <div class="tag">PROTOTIPO · TODO SE PROCESA EN TU NAVEGADOR</div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" id="tabTranslate">Traductor en vivo</button>
+    <button class="tab" id="tabLearn">Modo aprendizaje</button>
+  </div>
+
+  <main>
+    <div class="app-grid">
+
+      <!-- PANEL TRADUCTOR -->
+      <div class="panel" id="panelTranslate">
+        <span class="eyebrow c-secondary">Traducción en tiempo real</span>
+        <div class="word-display">
+          <div class="waiting" id="wordText">Muestra una seña…</div>
+        </div>
+        <div class="conf-track">
+          <div class="conf-fill" id="confFill"></div>
+        </div>
+        <span class="conf-label" id="confLabel">CONFIANZA DEL MODELO — 0%</span>
+
+        <div class="voice-row">
+          <div>
+            <div class="lbl">Voz automática</div>
+            <div class="sub">Lee en voz alta cada palabra reconocida</div>
+          </div>
+          <button class="switch" id="voiceSwitch"></button>
+        </div>
+
+        <div class="history">
+          <h3>Últimas señas reconocidas</h3>
+          <ul id="historyList">
+            <li class="empty">Aún no hay señas reconocidas.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PANEL APRENDIZAJE -->
+      <div class="panel" id="panelLearn" hidden>
+        <span class="eyebrow c-secondary">Modo aprendizaje</span>
+        <div class="module-tabs" id="moduleTabs" style="margin-top:16px;">
+          <button class="module-tab active" data-module="gestures">
+            ✋ Gestos
+          </button>
+          <button class="module-tab" data-module="alphabet_lsch">
+            🤟 Abecedario LSCh
+          </button>
+        </div>
+        <div class="module-note" id="moduleNote"></div>
+        <div class="progress-dots" id="progressDots"></div>
+        <div id="learnActive">
+          <div class="target-card">
+            <div class="hand-visual" id="learnVisual"></div>
+            <h2 id="learnWord">Hola</h2>
+            <p id="learnInstruction">Muestra la palma abierta frente a la cámara.</p>
+          </div>
+          <div class="feedback-banner" id="learnFeedback">Esperando tu intento…</div>
+          <button class="btn btn-primary" id="manualAdvanceBtn" hidden
+            style="width:100%; justify-content:center; margin-top:14px; background:var(--primary);">Marcar como
+            practicada →</button>
+          <div class="learn-footer">
+            <span class="score" id="learnScore">0 / 12 correctas</span>
+          </div>
+        </div>
+        <div id="learnComplete" class="learn-complete" hidden>
+          <div class="emoji">🎉</div>
+          <h2 id="learnCompleteTitle">¡Completaste el módulo!</h2>
+          <p id="learnCompleteText">Practicaste todas las señas de este módulo.</p>
+          <button class="btn btn-primary" id="restartLearn" style="background:var(--primary);">Practicar de
+            nuevo</button>
+        </div>
+      </div>
+
+      <!-- CAMARA (compartida entre ambos modos) -->
+      <div class="stage-col">
+        <div class="stage viewfinder">
+          <span class="vf-tr"></span><span class="vf-br"></span>
+          <div class="mirror-wrap">
+            <video id="video" autoplay playsinline muted></video>
+            <canvas id="overlay"></canvas>
+            <div class="start-overlay" id="startOverlay">
+              <div class="eyebrow" style="color:var(--accent);">Cámara requerida</div>
+              <p>Esta demo usa tu cámara para reconocer gestos de una o dos manos en vivo con IA. Ningún video se guarda
+                ni se envía a ningún servidor: todo corre en tu navegador.</p>
+              <button class="btn btn-primary" id="startBtn">Activar cámara</button>
+            </div>
+          </div>
+        </div>
+        <div class="stage-status">
+          <span class="rec" id="recDot" style="display:none;"></span>
+          <span class="txt" id="stageStatusText">Cámara inactiva</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div class="about">
+    <details>
+      <summary>Acerca de este prototipo</summary>
+      <div class="body">
+        Este prototipo usa <strong>MediaPipe Gesture Recognizer</strong> (Google) para detectar en vivo hasta <strong>2
+          manos</strong> a la vez. Traduce 12 gestos a palabras en español con texto y voz (Web Speech API): 7 son
+        gestos base del modelo, 3 se detectan con un clasificador propio de una mano y 2 son gestos de dos manos
+        (aplausos y manos juntas). El abecedario cubre las 27 letras de la <strong>Lengua de Señas Chilena
+          (LSCh)</strong>, separado en dos módulos: 10 letras que la IA verifica en vivo por geometría de la mano, y 17
+        que requieren movimiento, curvatura o contacto fino entre dedos —imposibles de verificar con este método simple—
+        por lo que se practican a ritmo propio. Para las formas oficiales completas, revisa el Diccionario Bilingüe
+        LSCh-Español de Mineduc, Capacitta Chile u otra fuente certificada por la comunidad sorda chilena. Es la base
+        funcional de SignSpeak AI: la misma arquitectura de cámara → IA → traducción se puede extender entrenando un
+        modelo propio con el vocabulario completo de la Lengua de Señas.
+      </div>
+    </details>
+  </div>
+
+  <footer>SIGNSPEAK AI — PROTOTIPO FUNCIONAL · ODS 10</footer>
+
+  <script type="module" src="static/js/main.js"></script>
+</body>
+
+</html>
