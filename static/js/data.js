@@ -8,13 +8,14 @@ export const GESTURES = {
   Thumb_Down: { word: "No", emoji: "👎", instruction: "Baja el pulgar hacia abajo." },
   Victory: { word: "Paz", emoji: "✌️", instruction: "Forma una V con los dedos índice y medio." },
   Closed_Fist: { word: "Alto", emoji: "✊", instruction: "Cierra la mano en un puño." },
-  Pointing_Up: { word:"Señal", emoji:"☝️", instruction:"Gesto de señalar con el dedo índice (no corresponde a la seña LSCh oficial de ayuda)."},
+  Pointing_Up: { word: "Señal", emoji: "☝️", instruction: "Gesto de señalar con el dedo índice (no corresponde a la seña LSCh oficial de ayuda)." },
   ILoveYou: { word: "Te quiero", emoji: "🤟", instruction: "Extiende el pulgar, índice y meñique." },
   OkSign: { word: "Perfecto", emoji: "👌", instruction: "Junta la punta del pulgar y el índice; extiende los otros tres dedos." },
   RockSign: { word: "Genial", emoji: "🤘", instruction: "Extiende el índice y el meñique; dobla el pulgar, el medio y el anular." },
   CallMeSign: { word: "Llámame", emoji: "🤙", instruction: "Extiende el pulgar y el meñique; dobla índice, medio y anular." },
   TwoHands_Open: { word: "¡Aplausos!", emoji: "🙌", instruction: "Muestra ambas manos con las palmas abiertas frente a la cámara." },
   TwoHands_Together: { word: "Gracias", emoji: "🙏", instruction: "Junta ambas manos frente a ti, una cerca de la otra." },
+  Ayuda: { word: "Ayuda", image: "static/images/signs/ayuda.png", instruction: "Realiza la seña LSCh de AYUDA." }
 };
 export const LEARN_SEQUENCE = Object.keys(GESTURES);
 
@@ -75,34 +76,35 @@ export const FINGER_PATTERNS = {
 
 export const MODULES = {
 
-gestures:{
-    label:'✋ Gestos',
-    verify:'gesture',
-    sequence:LEARN_SEQUENCE,
-    note:'Gestos reconocidos en vivo.',
-    getInfo(key){
-        const g = GESTURES[key];
-        return{
-            title:g.word,
-            instruction:g.instruction,
-            emoji:g.emoji,
-            kind:'emoji'
-        };
+  gestures: {
+    label: '✋ Gestos',
+    verify: 'gesture',
+    sequence: LEARN_SEQUENCE,
+    note: 'Gestos reconocidos en vivo.',
+    getInfo(key) {
+      const g = GESTURES[key];
+      return {
+        title: g.word,
+        instruction: g.instruction,
+        image: g.image,
+        emoji: g.emoji,
+        kind: g.image ? "image" : "emoji"
+      };
+    },
+  },
+  alphabet_lsch: {
+    label: '🤟 Abecedario LSCh',
+    verify: 'letter',
+    sequence: ALPHABET_LSCH_SEQUENCE,
+    note: 'Abecedario completo de Lengua de Señas Chilena.',
+    getInfo(key) {
+      return {
+        title: `Letra ${key}`,
+        instruction: ALPHABET_LSCH[key],
+        kind: 'letter'
+      };
     }
-},
-alphabet_lsch:{
-    label:'🤟 Abecedario LSCh',
-    verify:'letter',
-    sequence:ALPHABET_LSCH_SEQUENCE,
-    note:'Abecedario completo de Lengua de Señas Chilena.',
-    getInfo(key){
-        return{
-            title:`Letra ${key}`,
-            instruction:ALPHABET_LSCH[key],
-            kind:'letter'
-        };
-    }
-}
+  }
 };
 
 export const HAND_CONNECTIONS = [
