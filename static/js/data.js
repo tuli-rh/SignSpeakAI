@@ -27,7 +27,10 @@ export const LEARN_SEQUENCE = Object.keys(GESTURES);
 
 export const ALPHABET_LSCH = {
 
-  A: "Puño cerrado con el pulgar hacia un lado.",
+  A: {
+    instruction: "Puño cerrado con el pulgar hacia un lado.",
+    image: "static/images/signs/a.png"
+  },
   B: "Cuatro dedos extendidos juntos y pulgar pegado.",
   C: "Mano curva formando la letra C.",
   D: "Índice levantado y los demás dedos cerrados.",

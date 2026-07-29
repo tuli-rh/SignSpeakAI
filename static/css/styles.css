@@ -632,6 +632,13 @@ footer {
   font-size: 0.72rem;
 }
 
+.sign-img {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
 [hidden] {
   display: none !important;
 }
@@ -642,8 +649,8 @@ footer {
   }
 }
 
-.sign-image{
-    width:220px;
-    height:220px;
-    object-fit:contain;
+.sign-image {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
 }

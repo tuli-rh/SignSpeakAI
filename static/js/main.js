@@ -115,28 +115,30 @@ function renderLearnTarget() {
   const key = seq[learnIndex];
   const info = mod.getInfo(key);
 
-  if (info.kind === 'image') {
+  if (info.image) {
     learnVisual.innerHTML = `
-        <img 
-        src="${info.image}" 
+      <img
+        src="${info.image}"
         class="sign-image"
-        alt="Seña ${key}">
+        alt="${info.title}">
     `;
-  }else if (info.kind === 'hand') {
+  } else if (info.kind === 'hand') {
     learnVisual.innerHTML = handIconSVG(info.pattern);
-  }else {
+  } else {
     learnVisual.innerHTML = `
-        <div class="emoji letter-glyph">
-            ${key}
-        </div>
+      <div class="emoji letter-glyph">
+        ${key}
+      </div>
     `;
   }
 
+  // ← TODO ESTO DEBE QUEDAR DENTRO DE LA FUNCIÓN
   learnWord.textContent = info.title;
   learnInstruction.textContent = info.instruction;
   learnScore.textContent = mod.verify === 'manual'
     ? `${learnCorrectCount} / ${seq.length} practicadas`
     : `${learnCorrectCount} / ${seq.length} correctas`;
+
   moduleNote.textContent = mod.note;
   buildProgressDots();
 
@@ -149,7 +151,7 @@ function renderLearnTarget() {
     learnFeedback.className = 'feedback-banner';
     manualAdvanceBtn.hidden = true;
   }
-}
+} 
 
 // ---------- pestañas principales ----------
 tabTranslate.addEventListener('click', () => setMode('translate'));
